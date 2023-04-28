@@ -43,7 +43,7 @@ damai_url = 'https://www.damai.cn/'
 # 登录
 login_url = 'https://passport.damai.cn/login?ru=https%3A%2F%2Fwww.damai.cn%2F'
 # 抢票目标页
-target_url = 'https://detail.damai.cn/item.htm?spm=a2oeg.search_category.0.0.6ee64d156yMCV9&id=672706937093&clicktitle=%E7%95%99%E5%A3%B0%E7%8E%A9%E5%85%B72022%E3%80%8C%E6%97%B6%E9%97%B4%E7%9A%84%E8%B7%A8%E5%BA%A6%E3%80%8D%E5%B7%A1%E6%BC%94Vol%C2%B71%20%E9%95%BF%E6%B2%99%E7%AB%99'
+target_url = 'https://detail.damai.cn/item.htm?id=707098209282'
 
 
 # class Concert:
@@ -118,18 +118,18 @@ class Concert:
             print('###开始进行日期及票价选择###')
             while self.driver.title.find("确认订单") == -1:
                 try:
-                    buybutton = self.driver.find_element_by_class_name('buybtn').text
-                    if buybutton == '提交缺货登记':
+                    buy_button = self.driver.find_element_by_class_name('buybtn').text
+                    if buy_button == '提交缺货登记':
                         self.status = 2  # 没有进行更改操作
                         self.driver.get(target_url)  # 刷新页面 继续执行操作
-                    elif buybutton == '立即预定':
+                    elif buy_button == '立即预定':
                         # 点击立即预定
                         self.driver.find_element_by_class_name('buybtn').click()
                         self.status = 3
-                    elif buybutton == '立即购买':
+                    elif buy_button == '立即购买':
                         self.driver.find_element_by_class_name('buybtn').click()
                         self.status = 4
-                    elif buybutton == '选座购买':
+                    elif buy_button == '选座购买':
                         self.driver.find_element_by_class_name('buybtn').click()
                         self.status = 5
                 except:

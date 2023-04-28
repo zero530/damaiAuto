@@ -21,4 +21,9 @@ driver.get(login_url)
 driver.switch_to.frame(0)
 
 # sector
+# account
 driver.find_element_by_css_selector('#fm-login-id').send_keys('1213')
+# pwd
+driver.find_element_by_css_selector('#fm-login-password').send_keys('1213')
+# button
+driver.find_element_by_css_selector('#login-form > div.fm-btn > button').click()

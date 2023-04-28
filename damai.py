@@ -3,21 +3,21 @@
 用户要提前添加好个人信息和收货地址
 """
 
+import time
+
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-import time
+from selenium.webdriver.support.ui import WebDriverWait
 
 # 设置抢票链接和开票时间
 
 # URL = "https://piao.damai.cn/146290.html?spm=a2o6e.search.0.0.7e2b4d157EDtjL"# PC页面
 
-URL = 'http://m.damai.cn/damai/perform/item.html?projectId=146290'#手机页面
+URL = 'http://m.damai.cn/damai/perform/item.html?projectId=146290'  # 手机页面
 # HOUR = 19
-MIN  = 0
+MIN = 0
 USERNAME = "13112390306"
 
 driver = webdriver.Chrome()
@@ -28,6 +28,8 @@ driver.get(URL)
 """
 PC端网页抢票操作
 """
+
+
 def choose(seletor):
     try:
         # 控件可点击时才选定
@@ -39,6 +41,7 @@ def choose(seletor):
     except Exception:
         print("Not found!")
         return None
+
 
 def login():
     # 点击登录
@@ -59,6 +62,7 @@ def login():
     except Exception:
         print(password)
         print("Password Can't click")
+
 
 def buy():
     # 点击价格
@@ -83,30 +87,32 @@ def buy():
         # 立即抢购
         while None == buybtn:
             buybtn = choose('//*[@id="btnBuyNow"]')
-        driver.execute_script("arguments[0].scrollIntoView();", buybtn) 
+        driver.execute_script("arguments[0].scrollIntoView();", buybtn)
         buybtn.click()
         # 选择购票人
         while None == booker:
             booker = choose('/html/body/div[3]/div[3]/div[2]/div[2]/div/a')
-        driver.execute_script("arguments[0].scrollIntoView();", booker) 
+        driver.execute_script("arguments[0].scrollIntoView();", booker)
         booker.click()
         # 选择、确定
         while None == select:
-            select = choose('/html/body/div[3]/div[3]/div[12]/div/div[2]/div/div[2]/div/table/tbody/tr/label/td[1]/input')
-        driver.execute_script("arguments[0].scrollIntoView();", select) 
+            select = choose(
+                '/html/body/div[3]/div[3]/div[12]/div/div[2]/div/div[2]/div/table/tbody/tr/label/td[1]/input')
+        driver.execute_script("arguments[0].scrollIntoView();", select)
         select.click()
         while None == confirm:
             confirm = choose('/html/body/div[3]/div[3]/div[12]/div/div[2]/div/p/div/a')
-        driver.execute_script("arguments[0].scrollIntoView();", confirm) 
+        driver.execute_script("arguments[0].scrollIntoView();", confirm)
         confirm.click()
         # 提交订单
         while None == submit:
             submit = choose('//*[@id="orderConfirmSubmit"]')
-        driver.execute_script("arguments[0].scrollIntoView();", submit) 
+        driver.execute_script("arguments[0].scrollIntoView();", submit)
         submit.click()
     except Exception:
         print("抢票失败，尝试重新抢票")
         buy()
+
 
 def test():
     login()
@@ -120,23 +126,25 @@ def test():
 移动端抢票操作
 """
 
+
 def login_mobile():
     """
     点击购买进入登录界面
     自行输入帐号密码
     """
     # 立即购买
-    buybtn = None
-    while None == buybtn:
-        buybtn = choose('/html/body/div[1]/div[2]/div/div[1]/div[2]/div')
-    driver.execute_script("arguments[0].scrollIntoView();", buybtn) 
-    buybtn.click()
+    buy_btn = None
+    while None == buy_btn:
+        buy_btn = choose('/html/body/div[1]/div[2]/div/div[1]/div[2]/div')
+    driver.execute_script("arguments[0].scrollIntoView();", buy_btn)
+    buy_btn.click()
     # 默认已经选好时间了，再点击立即购买
     buy = None
     while None == buy:
         buy = choose('/html/body/div[1]/div[3]/div[2]/div[1]/div')
-    driver.execute_script("arguments[0].scrollIntoView();", buy) 
+    driver.execute_script("arguments[0].scrollIntoView();", buy)
     buy.click()
+
 
 def buy_mobile():
     try:
@@ -144,47 +152,48 @@ def buy_mobile():
         buybtn = None
         while None == buybtn:
             buybtn = choose('/html/body/div[1]/div[2]/div/div[1]/div[2]/div')
-        driver.execute_script("arguments[0].scrollIntoView();", buybtn) 
+        driver.execute_script("arguments[0].scrollIntoView();", buybtn)
         buybtn.click()
         # 默认已经选好时间了，再点击立即购买
         buy = None
         while None == buy:
             buy = choose('/html/body/div[1]/div[3]/div[2]/div[1]/div')
-        driver.execute_script("arguments[0].scrollIntoView();", buy) 
+        driver.execute_script("arguments[0].scrollIntoView();", buy)
         buy.click()
         # 580票面
         price = None
         while None == price:
             price = choose('//html/body/div[1]/div/div[2]/ul/li[3]')
-        driver.execute_script("arguments[0].scrollIntoView();", price) 
+        driver.execute_script("arguments[0].scrollIntoView();", price)
         price.click()
         # 数量+1
         count = None
         while None == count:
             count = choose('/html/body/div[1]/div/div[3]/ul/li/div/div[3]')
-        driver.execute_script("arguments[0].scrollIntoView();", count) 
+        driver.execute_script("arguments[0].scrollIntoView();", count)
         count.click()
         # 选好了
         select = None
         while None == select:
             select = choose('/html/body/div[1]/div/div[4]/div[3]')
-        driver.execute_script("arguments[0].scrollIntoView();", select) 
+        driver.execute_script("arguments[0].scrollIntoView();", select)
         select.click()
         # 购票人
         booker = None
         while None == booker:
             booker = choose('/html/body/div[1]/div[1]/div[2]/div[1]/div[2]/div/ul/li/div')
-        driver.execute_script("arguments[0].scrollIntoView();", booker) 
+        driver.execute_script("arguments[0].scrollIntoView();", booker)
         booker.click()
         # 去付款
         pay = None
         while None == pay:
             pay = choose('/html/body/div[1]/div[2]/div[2]/div[2]/div')
-        driver.execute_script("arguments[0].scrollIntoView();", pay) 
+        driver.execute_script("arguments[0].scrollIntoView();", pay)
         pay.click()
     except Exception:
         print("抢票失败，尝试重新抢票")
         buy_mobile()
+
 
 def test_mobile():
     login_mobile()
@@ -192,6 +201,7 @@ def test_mobile():
     print("开始抢票")
     buy_mobile()
     print("抢票成功")
+
 
 def main():
     # 默认PC网页，手机网页对应修改即可
@@ -203,6 +213,7 @@ def main():
             print("开始抢票")
             buy()
             print("抢票成功")
+
 
 if __name__ == '__main__':
     # test()
